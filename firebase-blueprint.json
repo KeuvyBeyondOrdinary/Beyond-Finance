@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Income or Expense transaction entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "description": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "branchId": { "type": "string" },
+        "partnerId": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdByName": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["type", "amount", "category", "date", "description"]
+    },
+    "Partner": {
+      "title": "Partner",
+      "description": "Business partner or team member account",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["owner", "partner", "accountant", "employee", "viewer"] },
+        "ownershipPercentage": { "type": "number" },
+        "capitalContribution": { "type": "number" },
+        "totalDrawings": { "type": "number" },
+        "status": { "type": "string" },
+        "joinedAt": { "type": "string" }
+      },
+      "required": ["name", "email", "role"]
+    },
+    "Branch": {
+      "title": "Branch",
+      "description": "Store or business branch location",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "manager": { "type": "string" },
+        "isOnline": { "type": "boolean" }
+      },
+      "required": ["name"]
+    },
+    "Budget": {
+      "title": "Budget",
+      "description": "Monthly budget planner target",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string" },
+        "monthlyLimit": { "type": "number" },
+        "currency": { "type": "string" },
+        "month": { "type": "string" },
+        "branchId": { "type": "string" }
+      },
+      "required": ["category", "monthlyLimit", "month"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System activity log for partner collaboration transparency",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "action": { "type": "string" },
+        "entityType": { "type": "string" },
+        "entityId": { "type": "string" },
+        "performedBy": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["action", "performedBy", "timestamp"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app alerts and notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "message"]
+    }
+  },
+  "firestore": {
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "All financial income and expense entries"
+    },
+    "/partners/{partnerId}": {
+      "schema": "Partner",
+      "description": "Partner capital and equity registry"
+    },
+    "/branches/{branchId}": {
+      "schema": "Branch",
+      "description": "Store location entries"
+    },
+    "/budgets/{budgetId}": {
+      "schema": "Budget",
+      "description": "Monthly expense budget settings"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Audit history for actions"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Notifications feed"
+    }
+  }
+}
